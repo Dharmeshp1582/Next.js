@@ -1,12 +1,91 @@
-import React from 'react'
+import React from "react";
+import style from "./service.module.css"; // Importing CSS module styles
+import Image from "next/image";
+import user from "@/public/user.png";
 
-const ServicePage = () => {
+const Services = () => {
   return (
-    <div>Hello from Service page
-    {/* in Nextjs you need to create an page.jsx or page.js inside any folder to show on web page if you want to create a new route */}
-    <p>This is the service page content.</p>
-    </div>
-  )
-}
+    <div>
+      <h1 className={style.common_heading}>Hello from Services page</h1>
+     <section className="">
+     <div className="max-w-4xl mx-auto px-6">
+     <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+      Our Team
+     </h2>
 
-export default ServicePage
+     <div className="grid grid-cols-3 gap-8">
+     {/* Team member 1 */}
+     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg duration-300 hover:-translate-y-2 transition-all">
+       <div className="w-24 h-24 bg-blue-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+       <Image src="/coder.png" alt="Team Member" width={500} height={500} className="rounded-full w-full h-full object-cover" />  
+       </div>
+       <h3 className="text-lg font-semibold text-center text-gray-800">Dharmesh Patel</h3>
+       <p className="text-sm text-center text-gray-600 mt-2">Web Developer</p>
+       <p className="text-xs text-gray-500 text-center mt-1">React.js | Next.js | Tailwind CSS</p>
+     </div>
+
+
+     {/* Team member 2 */}
+     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg duration-300 hover:-translate-y-2 transition-all">
+       <div className="w-24 h-24 bg-blue-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+       <span className="text-2xl font-bold text-gray-800">SB</span> 
+       </div>
+       <h3 className="text-lg font-semibold text-center text-gray-800">Sandip Bharadva</h3>
+       <p className="text-sm text-center text-gray-600 mt-2">Web Developer</p>
+       <p className="text-xs text-gray-500 text-center mt-1">Python Developer</p>
+     </div>
+
+
+     {/* Team member 3 */}
+     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg duration-300 hover:-translate-y-2 transition-all">
+       <div className="w-24 h-24 bg-yellow-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+     <span className="text-2xl font-bold text-gray-800">HM</span> 
+       </div>
+       <h3 className="text-lg font-semibold text-center text-gray-800">Harsh Patel</h3>
+       <p className="text-sm text-center text-gray-600 mt-2">Web Developer</p>
+       <p className="text-xs text-gray-500 text-center mt-1">Java | Springboot | Hibernate</p>
+     </div>
+
+     {/* Team member 4 */}
+     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg duration-300 hover:-translate-y-2 transition-all">
+       <div className="w-24 h-24 bg-red-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+      <span className="text-2xl font-bold text-gray-800">HD</span> 
+       </div>
+       <h3 className="text-lg font-semibold text-center text-gray-800">Hemang Prajapati</h3>
+       <p className="text-sm text-center text-gray-600 mt-2">Web Developer</p>
+       <p className="text-xs text-gray-500 text-center mt-1">React.js | Tailwind CSS</p>
+     </div>
+
+
+     {/* Team member 5 */}
+     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg duration-300 hover:-translate-y-2 transition-all">
+       <div className="w-24 h-24 bg-blue-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+       <span className="text-2xl font-bold text-gray-800">JR</span> 
+       </div>
+       <h3 className="text-lg font-semibold text-center text-gray-800">Jigar Raval</h3>
+       <p className="text-sm text-center text-gray-600 mt-2">Web Developer</p>
+       <p className="text-xs text-gray-500 text-center mt-1">MERN stack enthusiast</p>
+     </div>
+
+
+     {/* Team member 6 */}
+     <div className="bg-white  rounded-lg shadow-md hover:shadow-lg duration-300 hover:-translate-y-2 transition-all">
+       <div className="relative w-full h-full bg-blue-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+       <Image src={user} alt="Team Member" fill={true} quality={100} priority={false} placeholder="blur"
+       blurDataURL=""
+        />  
+       </div>
+       {/* <h3 className="text-lg font-semibold text-center text-gray-800">Jayesh Raval</h3>
+       <p className="text-sm text-center text-gray-600 mt-2">Web Developer</p>
+       <p className="text-xs text-gray-500 text-center mt-1">MERN stack developer</p> */}
+     </div>
+     </div>
+
+     </div>
+
+     </section>
+    </div>
+  );
+};
+
+export default Services;
