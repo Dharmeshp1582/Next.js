@@ -1,8 +1,12 @@
+import Link from 'next/link'
 import React from 'react'
 
 const AboutPage = () => {
   return (
-    <div className='bg-red-500'>Hello from About page</div>
+    <>
+      <h1 className='common_heading'>Hello from About page</h1>
+      <button><Link href="/">Go to Home</Link></button>
+    </>
   )
 }
 

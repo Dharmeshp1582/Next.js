@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+
+@media (prefers-color-scheme: dark) {
+  /* Dark mode styles */
+  :root{
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body{
+  background: black;
+  color: #ededed;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.common_heading{
+ color: pink;
+ font-size: 100%;
+}
