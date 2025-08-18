@@ -5,7 +5,7 @@ import user from "@/public/user.png";
 
 const Services = () => {
   return (
-    <div>
+    <section className='font-roboto'>
       <h1 className={style.common_heading}>Hello from Services page</h1>
      <section className="">
      <div className="max-w-4xl mx-auto px-6">
@@ -84,7 +84,7 @@ const Services = () => {
      </div>
 
      </section>
-    </div>
+    </section>
   );
 };
 
