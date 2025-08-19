@@ -5,7 +5,8 @@ export const metadata = {
     title: "About Page",
     description: "Learn more about our team and mission",
 }
-const AboutPage = () => {
+
+const AboutPage = async () => {
   return (
     <>
       <h1 className='common_heading'>Hello from About page</h1>
