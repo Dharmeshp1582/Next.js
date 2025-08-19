@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 
+export const metadata = {
+    title: "About Page",
+    description: "Learn more about our team and mission",
+}
 const AboutPage = () => {
   return (
     <>

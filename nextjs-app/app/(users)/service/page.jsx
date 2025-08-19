@@ -3,7 +3,14 @@ import style from "./service.module.css"; // Importing CSS module styles
 import Image from "next/image";
 import user from "@/public/user.png";
 
-const Services = () => {
+export const metadata = {
+  title: "Service Page",
+  description: "Explore our services and offerings",
+  authors: [{name:"Dharmesh Patel"},{name:"Harsh Patel",url:"dharmesh-patel.vercel.app"}],
+  keywords: ["nextjs", "reactjs", "web development","fullStack"] //these are words for identify or search your page
+};
+
+const Service = () => {
   return (
     <section className='font-roboto'>
       <h1 className={style.common_heading}>Hello from Services page</h1>
@@ -88,4 +95,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Service;
