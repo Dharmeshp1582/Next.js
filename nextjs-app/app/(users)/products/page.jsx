@@ -1,15 +1,16 @@
 import React from 'react'
+import ProductList from './ProductList';
 
-const Products = async({searchParams}) => {
+const Products = async(props) => {
 
-  // const searchParams = await props.searchParams; // 1st way
+  const searchParams = await props.searchParams; // 1st way
 
   const category = searchParams?.category || "all";
   const page = searchParams?.page || 1;
   const sort = searchParams?.sort || "default";
 
   // console.log(params)
-//  console.log(props.searchParams);
+ console.log("Outside: ",searchParams);
 
 //http://localhost:3000/products?category=laptop&page=1&price-asc=200
 //output in console = {category: 'laptop', page: '1', price-asc: '200'}
@@ -18,6 +19,7 @@ const Products = async({searchParams}) => {
   return (
     <div>
       <h1>Search Params</h1>
+      <ProductList />
       <h3>Showing {category} products, sorted by {sort}, page {page} </h3>
     </div>
   )
