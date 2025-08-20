@@ -3,25 +3,25 @@
 import { User, Users, Star, TrendingUp } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 const DataFetchClient = () => {
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true); 
   const searchParams = useSearchParams();
   const userName = searchParams.get("name");
 
-  // Handle case where no name is provided
+  // If no name in query params
   if (!userName) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">
-              No Name Provided
-            </h1>
-            <p className="text-gray-600">
-              Please add ?name=yourname to the URL
-            </p>
-          </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+            No Name Provided
+          </h1>
+          <p className="text-gray-600">
+            Please add ?name=yourname to the URL
+          </p>
         </div>
       </div>
     );
@@ -29,20 +29,46 @@ const DataFetchClient = () => {
 
   useEffect(() => {
     const revealUserGender = async () => {
-      const res = await fetch(`https://api.genderize.io/?name=${userName}`);
-      const userData = await res.json();
-      //   console.log(userData);
-      setUserInfo(userData);
+      setLoading(true); // show loader
+      try {
+        const res = await fetch(`https://api.genderize.io/?name=${userName}`);
+        const userData = await res.json();
+        setUserInfo(userData);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false); // hide loader
+      }
     };
     revealUserGender();
-  }, []);
+  }, [userName]);
 
-  if (!userInfo.gender) return null;
+  //  Show loading animation while fetching
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
+        <Loading />
+      </div>
+    );
+  }
 
+  // 👉 If API gave no gender
+  if (!userInfo?.gender) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
+        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+          <h1 className="text-xl font-bold text-gray-700">
+            Could not detect gender 😅
+          </h1>
+        </div>
+      </div>
+    );
+  }
+
+  // 👉 Otherwise show your main UI
   const isMale = userInfo.gender === "male";
   const confidencePercentage = userInfo.probability * 100;
 
-  //   console.log("Random :", Math.random());
 
   return (
     <>
