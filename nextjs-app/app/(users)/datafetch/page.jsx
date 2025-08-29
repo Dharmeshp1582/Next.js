@@ -1,9 +1,13 @@
-import React from 'react'
+import { Suspense } from "react";
+import DataFetchClient from "./clientcomp/page";
 
-const DataFetch = () => {
+const DataFetch =() => {
   return (
-    <div>Data Fetch Page</div>
-  )
+    <Suspense fallback={<div>Loading...</div>}>
+      <DataFetchClient />
+    </Suspense>
+  );
 }
+
 
 export default DataFetch
