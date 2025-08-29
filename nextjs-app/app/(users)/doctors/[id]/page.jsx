@@ -2,26 +2,35 @@ import { db } from "@/config/db";
 import { Mail, Phone, Award, User } from "lucide-react";
 import { notFound } from "next/navigation";
 
-const SingleDoctor = async (props) => {
-  const params = await props.params;
-  console.log("params: ", params);
+export async function generateStaticParams() {
+  const [doctors] = await db.execute(`SELECT id FROM doctors`);
+  return doctors.map((doc) => ({
+    id: doc.id.toString(),
+  }));
+}
 
-  const [[doctor]] = await db.execute(
+const SingleDoctor = async ({ params }) => {
+  // ✅ Await params properly
+  const { id } = await params;
+
+  // Convert to int only if doctor.id is INT
+  const doctorId = parseInt(id, 10);
+
+  const [rows] = await db.execute(
     `SELECT * FROM doctors WHERE id = ?`,
-    [params.id]
+    [doctorId]
   );
-  console.log("🚀 ~ SingleDoctor ~ doctor:", doctor);
+
+  const doctor = rows[0];
 
   if (!doctor) return notFound();
 
-  // Get initials from name
-  const getInitials = (fullName) => {
-    return fullName
+  const getInitials = (fullName) =>
+    fullName
       .split(" ")
       .map((n) => n[0])
       .join("")
       .toUpperCase();
-  };
 
   return (
     <div className="flex justify-center h-screen items-center">
@@ -53,10 +62,9 @@ const SingleDoctor = async (props) => {
             </div>
           </div>
 
-          {/* Divider */}
           <div className="border-t border-gray-100"></div>
 
-          {/* Placeholder Info (since no extra columns in DB) */}
+          {/* Extra Info */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center space-x-2">
               <Award className="w-4 h-4 text-yellow-500" />

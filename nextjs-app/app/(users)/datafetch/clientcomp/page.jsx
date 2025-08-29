@@ -2,87 +2,74 @@
 
 import { User, Users, Star, TrendingUp } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import Loading from "./Loading";
+import { useEffect, useState, Suspense } from "react";
 
-const DataFetchClient = () => {
+function DataFetchContent() {
   const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(true); 
   const searchParams = useSearchParams();
   const userName = searchParams.get("name");
 
-  // If no name in query params
-  if (!userName) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
-            No Name Provided
-          </h1>
-          <p className="text-gray-600">
-            Please add ?name=yourname to the URL
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   useEffect(() => {
+    if (!userName) return;
+
     const revealUserGender = async () => {
-      setLoading(true);
       try {
         const res = await fetch(`https://api.genderize.io/?name=${userName}`);
         const userData = await res.json();
         setUserInfo(userData);
       } catch (err) {
         console.error("Error fetching data:", err);
-      } finally {
-        setLoading(false);
       }
     };
     revealUserGender();
   }, [userName]);
 
-  if (loading) {
+  // Handle case where no name is provided
+  if (!userName) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-        <Loading />
-      </div>
-    );
-  }
-
-  if (!userInfo?.gender) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-          <h1 className="text-xl font-bold text-gray-700">
-            Could not detect gender 😅
-          </h1>
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">
+              No Name Provided
+            </h1>
+            <p className="text-gray-600">
+              Please add ?name=yourname to the URL
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
+  if (!userInfo) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">Loading...</p>
+      </div>
+    );
+  }
+
   const isMale = userInfo.gender === "male";
-  const confidencePercentage = userInfo.probability ? userInfo.probability * 100 : 0;
+  const confidencePercentage = userInfo.probability * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full relative overflow-hidden">
-        {/* Background decoration */}
+        {/* Decorations */}
         <div
           className={`absolute top-0 right-0 w-32 h-32 ${
             isMale ? "bg-blue-100" : "bg-pink-100"
           } rounded-full -translate-y-16 translate-x-16 opacity-50`}
-        ></div>
+        />
         <div
           className={`absolute bottom-0 left-0 w-24 h-24 ${
             isMale ? "bg-blue-50" : "bg-pink-50"
           } rounded-full translate-y-12 -translate-x-12 opacity-50`}
-        ></div>
+        />
 
         <div className="relative z-10">
-          {/* Avatar Section */}
+          {/* Avatar */}
           <div className="text-center mb-6">
             <div
               className={`w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-4 ${
@@ -109,14 +96,14 @@ const DataFetchClient = () => {
                 className={`w-2 h-2 rounded-full mr-2 ${
                   isMale ? "bg-blue-500" : "bg-pink-500"
                 }`}
-              ></span>
-              {userInfo.gender.charAt(0).toUpperCase() + userInfo.gender.slice(1)}
+              />
+              {userInfo.gender.charAt(0).toUpperCase() +
+                userInfo.gender.slice(1)}
             </div>
           </div>
 
-          {/* Stats Section */}
+          {/* Confidence */}
           <div className="space-y-4">
-            {/* Confidence Bar */}
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-gray-600 flex items-center">
@@ -124,7 +111,7 @@ const DataFetchClient = () => {
                   Confidence
                 </span>
                 <span className="text-sm font-bold text-gray-800">
-                  {confidencePercentage.toFixed(0)}%
+                  {confidencePercentage}%
                 </span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
@@ -135,11 +122,11 @@ const DataFetchClient = () => {
                       : "bg-gradient-to-r from-pink-400 to-pink-600"
                   }`}
                   style={{ width: `${confidencePercentage}%` }}
-                ></div>
+                />
               </div>
             </div>
 
-            {/* Data Count */}
+            {/* Data Sample Size */}
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-600 flex items-center">
@@ -147,12 +134,12 @@ const DataFetchClient = () => {
                   Data Sample Size
                 </span>
                 <span className="text-sm font-bold text-gray-800">
-                  {userInfo.count?.toLocaleString() ?? 0}
+                  {userInfo.count.toLocaleString()}
                 </span>
               </div>
             </div>
 
-            {/* Accuracy Indicator */}
+            {/* Accuracy */}
             <div
               className={`rounded-lg p-4 border-2 ${
                 confidencePercentage >= 90
@@ -178,6 +165,13 @@ const DataFetchClient = () => {
       </div>
     </div>
   );
-};
+}
 
-export default DataFetchClient;
+// ✅ Wrap in Suspense to avoid hydration mismatch
+export default function DataFetchClient() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Loading params...</div>}>
+      <DataFetchContent />
+    </Suspense>
+  );
+}
