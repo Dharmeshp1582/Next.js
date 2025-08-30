@@ -114,6 +114,7 @@ export default Contact;
 
 const Submit = () => {
   const { pending, data, method, action } = useFormStatus();
+  // useformstatus shows last submitted form status or store last submited form response
   return (
     <>
       <button

@@ -22,4 +22,5 @@ export const contactAction = async (fullName, email, message) => {
   }
 };
 
-// redirect() is a server-only function. It throws a special Next.js response to perform a server-side redirect — which only works during server-side rendering (SSR), server actions, or loaders.
+// redirect("/") // after submitting for it will redirect to / page .
+// This is a server-only function. It throws a special Next.js response to perform a server-side redirect — which only works during server-side rendering (SSR), server actions, or loaders.
