@@ -15,7 +15,7 @@ export const contactAction = async (fullName, email, message) => {
       [fullName, email, message]
     );
     return { success: true, message: "form submitted successfully" };
-    // redirect("/");
+    // redirect("/"); same as react navigate
   } catch (error) {
     if (error.message === "NEXT_REDIRECT") throw error;
     return { success: false, message: "error while submitting Form" };
