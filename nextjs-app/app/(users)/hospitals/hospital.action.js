@@ -14,7 +14,7 @@ export const createHospitalAction = async (data) => {
       [name, city, state, department, established_year]
     );
 
-    revalidatePath("/hospitals");//refresh old data and load new data
+    revalidatePath("/hospitals");//refresh old data and load new data works at both build and dev
 
     return { success: true, message: "Hospital data submitted successfully" };
   } catch (error) {
